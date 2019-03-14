@@ -1,6 +1,6 @@
 @font-face {
     font-family: Arial;
-    src: url(fonts/Perfect_fonts_CC.ttf);
+    src: url(../fonts/Perfect_fonts_CC.ttf);
 }
 
 a {
@@ -9,7 +9,7 @@ a {
     font-size: 20px;
 }
 
-.login-div{
+.login-div {
     margin-top: 80px;
 }
 
@@ -25,7 +25,7 @@ a {
 .login-input {
     border: #ccc 1px solid;
     border-bottom: #ccc 2px solid;
-    border-radius:5px;
+    border-radius: 5px;
     padding: 8px;
     margin: 0 0 10px 0;
     width: 200px;
@@ -35,7 +35,7 @@ a {
 .submit {
     border: #ccc 1px solid;
     border-bottom: #ccc 2px solid;
-    border-radius:5px;
+    border-radius: 5px;
     margin: 0 0 10px 0;
     width: 200px;
     height: 25px;
@@ -45,7 +45,7 @@ body {
     margin: 0;
     padding: 0;
     color: #68412E;
-    background: #E5C4B4 url(images/background_image.png);
+    background: #E5C4B4 url(../images/background_image.png);
     background-repeat: repeat;
     font-family: Pompadur, 'Comic Sans MS', cursive;
     margin-left: 220px;
@@ -61,10 +61,10 @@ article {
     height: 600px;
 }
 
-nav{
+nav {
     padding-top: 10px;
-    float:left; 
-    background-color: white; 
+    float: left;
+    background-color: white;
     width: 25%;
     height: 600px;
     text-align: center;
@@ -79,14 +79,14 @@ span {
     padding: 10px;
     font-size: 50px;
     text-align: center;
-    width: 98.5%;   
+    width: 98.5%;
     height: 100px;
     background-color: #E5C4B4;
 }
 
 footer {
-    clear:both;
-    padding: 10px;  
+    clear: both;
+    padding: 10px;
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
@@ -94,6 +94,7 @@ footer {
     width: 98.1%;
     height: 100px;
 }
+
 ul {
     text-align: left;
     list-style-type: none;

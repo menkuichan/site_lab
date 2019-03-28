@@ -96,6 +96,7 @@ footer {
 }
 
 ul {
+    margin-left: -8px;
     text-align: left;
     list-style-type: none;
 }

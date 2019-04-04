@@ -36,27 +36,35 @@ const postScheme = new Schema({
 mongoose.connect(DB_URL, {useNewUrlParser: true});
 const Post = mongoose.model("Post", postScheme);
 
-// создать пост
-module.exports.createPost = function (authorId, title, text, pics) {
-    Post.create({author_id: authorId, title: title, text: text, pics: pics, date: Date.now()}, function (err, post) {
-        mongoose.disconnect();
-        if (err) return console.log(err);
-        console.log("New post created:\n", post);
-    });
-}
-// получить все посты
-module.exports.getAllPosts = function () {
-    Post.find({}, function (err, posts) {
-        mongoose.disconnect();
-        if (err) return console.log(err);
-        console.log(posts);
-    });
-}
-// удалить все посты
-module.exports.removeAllPosts = function () {
-    Post.remove({}, function (err, result) {
-        mongoose.disconnect();
-        if (err) return console.log(err);
-        console.log(result);
-    });
-}
+module.exports = {
+    // создать пост
+    createPost: function (authorId, title, text, pics) {
+        Post.create({
+            author_id: authorId,
+            title: title,
+            text: text,
+            pics: pics,
+            date: Date.now()
+        }, function (err, post) {
+            mongoose.disconnect();
+            if (err) return console.log(err);
+            console.log("New post created:\n", post);
+        });
+    },
+    // получить все посты
+    getAllPosts: function () {
+        Post.find({}, function (err, posts) {
+            mongoose.disconnect();
+            if (err) return console.log(err);
+            console.log(posts);
+        });
+    },
+    // удалить все посты
+    removeAllPosts: function () {
+        Post.remove({}, function (err, result) {
+            mongoose.disconnect();
+            if (err) return console.log(err);
+            console.log(result);
+        });
+    }
+};

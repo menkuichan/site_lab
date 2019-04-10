@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 
 export const MainPage = props => (
-    <div className="border-div">
-        <header className="welcome">Здравствуй, <span>дорогой пользователь!</span></header>
+    <div className="border-div" >
+        <header className="welcome ">Здравствуй, <span>дорогой пользователь!</span></header>
         <nav>
             <img src={require("./images/about.png")} alt="О сайте" />
             <p>=^● ⋏ ● ^= Meow!</p>

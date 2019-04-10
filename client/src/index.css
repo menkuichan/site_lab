@@ -43,13 +43,13 @@ a {
 
 body {
   margin: 0;
-  padding: 0;
+  display: flex;
+  justify-content: center;
   color: #68412E;
   background: #E5C4B4 url(  images/background_image.png);
   background-repeat: repeat;
   font-family: Pompadur, 'Comic Sans MS', cursive;
-  margin-left: 220px;
-  margin-right: 220px;
+
 }
 
 article {
@@ -99,4 +99,5 @@ ul {
   margin-left: -8px;
   text-align: left;
   list-style-type: none;
-}
+} 
+

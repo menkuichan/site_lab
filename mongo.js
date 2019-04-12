@@ -36,20 +36,6 @@ mongoose.connect(DB_URL, {useNewUrlParser: true});
 const Post = mongoose.model("Post", postScheme);
 
 module.exports = {
-    sendPost: function (event) {
-        console.log(event.target);
-        // Post.create({
-        //     author_id: authorId,
-        //     title: title,
-        //     text: text,
-        //     pics: pics,
-        //     date: Date.now()
-        // }, function (err, post) {
-        //     mongoose.disconnect();
-        //     if (err) return console.log(err);
-        //     console.log("New post created:\n", post);
-        // });
-    },
     // создать пост
     createPost: function (authorId, title, text, pics) {
         Post.create({

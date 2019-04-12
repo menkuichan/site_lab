@@ -21,7 +21,7 @@ var connection = mysql.createConnection({
 connection.connect(err => {
     if (err) {
         console.log("MySQL connection error!");
-        throw err;
+        return console.log(err);
     }
     console.log("Connected to MySQL");
 });
@@ -33,7 +33,8 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// авторизация
+
+// Авторизация
 app.post("/login", function (request, response) {
     if (!request.body) return response.sendStatus(400);
 
@@ -65,7 +66,7 @@ app.post("/login", function (request, response) {
     console.log("Password: " + request.body.password);
 });
 
-// регистрация
+// Регистрация
 app.post("/register", function (request, response) {
     if (!request.body) return response.sendStatus(400);
     var username = request.body.login;
@@ -107,9 +108,9 @@ app.post("/register", function (request, response) {
     response.redirect("/");
 });
 
+// Создание поста
 app.post("/profile", function (request, response) {
-    console.log("test");
-    console.log(request.body);
+    mongo.createPost(111, "Test title", request.body.text);
     response.redirect("/profile");
 });
 
@@ -119,8 +120,3 @@ app.get('*', (req, res) => {
 
 app.listen(2019);
 console.log("Server is running on localhost:2019");
-
-// Test
-//mongo.createPost("Author", "Title", "Text", "Pics");
-//mongo.getAllPosts();
-//catapi.getRandomCats(5);

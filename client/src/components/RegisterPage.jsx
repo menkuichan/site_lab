@@ -18,19 +18,22 @@ export const RegisterPage = props => (
                 <Link to="/register">
                     <li>Зарегистрироваться</li>
                 </Link>
+                <Link to="/profile">
+                    <li>Профиль</li>
+                </Link>
             </ul>
         </nav>
         <article>
             <div className="register-div">
-                <form action="/api/register" method="post">
+                <form action="/register" method="post">
                     <input className="login-input" placeholder="login" type="text" name="login" required={true}/>
                     <br/>
                     <input className="login-input" placeholder="email" type="email" name="email" required={true}/>
                     <br/>
-                    <input className="login-input" placeholder="password" type="password" name="password"
+                    <input className="login-input" placeholder="password" type="password" id="pas1" name="password"
                            required={true}/>
                     <br/>
-                    <input className="login-input" placeholder="repeat password" type="password" name="repassword"
+                    <input className="login-input" placeholder="repeat password" type="password" id="pas2" name="repassword"
                            required={true}/>
                     <br/>
                     <input className="submit" type="submit" name="submit" defaultValue="Register!"/>
@@ -42,5 +45,18 @@ export const RegisterPage = props => (
         </footer>
     </div>
 )
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('form').forEach(function (form) {
+        form.onsubmit = function () {
+            var pas1 = document.getElementById('pas1').value;
+            var pas2 = document.getElementById('pas2').value;
+            if (pas1 != pas2) {
+                alert("Пароль не совпадает");
+                return false;
+            }
+        }
+    })
+})
 
 export default RegisterPage

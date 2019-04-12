@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongo = require("./mongo");
 const catapi = require("./catapi");
 const app = express();
+const fs = require('fs');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -18,8 +19,11 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(err => {
-    if (err) throw err;
-    console.log("Connected!");
+    if (err) {
+        console.log("MySQL connection error!");
+        throw err;
+    }
+    console.log("Connected to MySQL");
 });
 
 app.use(session({
@@ -30,7 +34,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 // авторизация
-app.post("/api/login", function (request, response) {
+app.post("/login", function (request, response) {
     if (!request.body) return response.sendStatus(400);
 
     var username = request.body.login;
@@ -62,32 +66,51 @@ app.post("/api/login", function (request, response) {
 });
 
 // регистрация
-app.post("/api/register", function (request, response) {
+app.post("/register", function (request, response) {
     if (!request.body) return response.sendStatus(400);
     var username = request.body.login;
     var email = request.body.email;
     var password = request.body.password;
     var repassword = request.body.repassword;
-    //if(password!=repassword)return response.sendStatus();
-    var sql = 'INSERT INTO accounts (username, password, email) VALUES ?';
-    var values = [
-        [username, password, email]
-    ];
-    connection.query(sql, [values], (error, result) => {
+
+    var sql = 'SELECT username FROM accounts WHERE username = "' + username + '"';
+
+    connection.query(sql, (error, result, fields) => {
         if (error) throw error;
 
-        request.session.loggedin = true;
-        request.session.username = username;
-        response.redirect("/");
-
-        console.log("Number of records inserted: " + result.affectedRows);
+        if (result.length != 0) {
+            console.log("Login exist");
+        } else {
+            sql = 'SELECT email FROM accounts WHERE email = "' + email + '"';
+            connection.query(sql, (error, result, fields) => {
+                if (error) throw error;
+                if (result.length != 0) {
+                    console.log("Email exist");
+                } else {
+                    sql = 'INSERT INTO accounts (username, password, email) VALUES ?';
+                    var values = [[username, password, email]];
+                    connection.query(sql, [values], (error, result) => {
+                        if (error) throw error;
+                        request.session.loggedin = true;
+                        request.session.username = username;
+                        console.log("\nNew registration:");
+                        console.log("Login: " + request.body.login);
+                        console.log("Email: " + request.body.email);
+                        console.log("Password: " + request.body.password);
+                        console.log("Re-password: " + request.body.repassword);
+                        console.log("Number of records inserted: " + result.affectedRows);
+                    });
+                }
+            });
+        }
     });
+    response.redirect("/");
+});
 
-    console.log("\nNew registration:");
-    console.log("Login: " + request.body.login);
-    console.log("Email: " + request.body.email);
-    console.log("Password: " + request.body.password);
-    console.log("Re-password: " + request.body.repassword);
+app.post("/profile", function (request, response) {
+    console.log("test");
+    console.log(request.body);
+    response.redirect("/profile");
 });
 
 app.get('*', (req, res) => {
@@ -100,4 +123,4 @@ console.log("Server is running on localhost:2019");
 // Test
 //mongo.createPost("Author", "Title", "Text", "Pics");
 //mongo.getAllPosts();
-catapi.getRandomCats(5);
+//catapi.getRandomCats(5);

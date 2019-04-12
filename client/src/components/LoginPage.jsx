@@ -19,11 +19,14 @@ export const LoginPage = props => (
                 <Link to="/register">
                     <li>Зарегистрироваться</li>
                 </Link>
+                <Link to="/profile">
+                    <li>Профиль</li>
+                </Link>
             </ul>
         </nav>
         <article>
             <div className="login-div">
-                <form action="/api/login" method="post">
+                <form action="/login" method="post">
                     <input className="login-input" placeholder="login" type="text" name="login" />
                     <br />
                     <input className="login-input" placeholder="*****" type="password" name="password" />

@@ -1,11 +1,11 @@
 import React from 'react';
-import style from '../style.js'
+import style from '../style.js';
 
 export const CreatePost = () => (
     <div style={style.inputPost}>
-        <form action=''>
-            <input style={style.post} type="text" name="post" />
-            <input style={style.submitPost} type="submit" value="Submit" />
+        <form action="/profile" method="post">
+            <input style={style.post} type="text" name="text"/>
+            <input style={style.submitPost} type="submit" value="Submit"/>
         </form>
     </div>
 );

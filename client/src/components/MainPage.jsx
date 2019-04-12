@@ -19,6 +19,9 @@ export const MainPage = props => (
                 <Link to="/register">
                     <li>Зарегистрироваться</li>
                 </Link>
+                <Link to="/profile">
+                    <li>Профиль</li>
+                </Link>
             </ul>
         </nav>
         <article>

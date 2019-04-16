@@ -79,13 +79,13 @@ app.post("/register", function (request, response) {
     connection.query(sql, (error, result, fields) => {
         if (error) throw error;
 
-        if (result.length != 0) {
+        if (result.length !== 0) {
             console.log("Login exist");
         } else {
             sql = 'SELECT email FROM accounts WHERE email = "' + email + '"';
             connection.query(sql, (error, result, fields) => {
                 if (error) throw error;
-                if (result.length != 0) {
+                if (result.length !== 0) {
                     console.log("Email exist");
                 } else {
                     sql = 'INSERT INTO accounts (username, password, email) VALUES ?';
@@ -110,7 +110,9 @@ app.post("/register", function (request, response) {
 
 // Создание поста
 app.post("/profile", function (request, response) {
-    mongo.createPost(111, "Test title", request.body.text);
+    catapi.getRandomCats(1, function (pics) {
+        mongo.createPost(111, request.body.title, request.body.text, pics[0].url);
+    })
     response.redirect("/profile");
 });
 

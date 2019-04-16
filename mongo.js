@@ -20,8 +20,8 @@ const postScheme = new Schema({
             minlength: 1,
             maxlength: 1000
         },
-        pics: {
-            type: [String]
+        pic: {
+            type: String
         },
         date: {
             type: Date,
@@ -37,12 +37,12 @@ const Post = mongoose.model("Post", postScheme);
 
 module.exports = {
     // создать пост
-    createPost: function (authorId, title, text, pics) {
+    createPost: function (authorId, title, text, pic) {
         Post.create({
             author_id: authorId,
             title: title,
             text: text,
-            pics: pics,
+            pic: pic,
             date: Date.now()
         }, function (err, post) {
             mongoose.disconnect();

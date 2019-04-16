@@ -20,7 +20,7 @@ const postScheme = new Schema({
             minlength: 1,
             maxlength: 1000
         },
-        pics: {
+        pic: {
             type: [String]
         },
         date: {
@@ -42,7 +42,7 @@ module.exports = {
         //     author_id: authorId,
         //     title: title,
         //     text: text,
-        //     pics: pics,
+        //     pic: pic,
         //     date: Date.now()
         // }, function (err, post) {
         //     mongoose.disconnect();
@@ -56,7 +56,7 @@ module.exports = {
             author_id: authorId,
             title: title,
             text: text,
-            pics: pics,
+            pic: pics,
             date: Date.now()
         }, function (err, post) {
             mongoose.disconnect();

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-
 import {LoginPage, MainPage, ProfilePage, RegisterPage} from './components'
 
 import './App.css'

@@ -1,11 +1,15 @@
 const express = require("express");
+const passport = require("passport");
+const session = require("express-session");
+const RedisStore = require('connect-redis')(session)
+const LocalStrategy = require('passport-local').Strategy
 const path = require('path');
 const mysql = require("mysql");
-const session = require("express-session");
 const bodyParser = require("body-parser");
 const mongo = require("./mongo");
 const catapi = require("./catapi");
 const app = express();
+const cookie = require("cookie");
 const fs = require('fs');
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
@@ -28,8 +32,8 @@ connection.connect(err => {
 
 app.use(session({
     secret: '123123',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -37,14 +41,11 @@ app.use(bodyParser.json());
 // Авторизация
 app.post("/login", function (request, response) {
     if (!request.body) return response.sendStatus(400);
-
-    var username = request.body.login;
-    var password = request.body.password;
-
+    let username = request.body.login;
+    let password = request.body.password;
     if (username && password) {
-        var sql = 'SELECT * FROM accounts WHERE username = ? AND password = ?';
-        var values = [username, password];
-
+        let sql = 'SELECT * FROM accounts WHERE username = ? AND password = ?';
+        let values = [username, password];
         connection.query(sql, values, (error, results, field) => {
             if (error) throw error;
 
@@ -69,12 +70,12 @@ app.post("/login", function (request, response) {
 // Регистрация
 app.post("/register", function (request, response) {
     if (!request.body) return response.sendStatus(400);
-    var username = request.body.login;
-    var email = request.body.email;
-    var password = request.body.password;
-    var repassword = request.body.repassword;
+    let username = request.body.login;
+    let email = request.body.email;
+    let password = request.body.password;
+    //var repassword = request.body.repassword;
 
-    var sql = 'SELECT username FROM accounts WHERE username = "' + username + '"';
+    let sql = 'SELECT username FROM accounts WHERE username = "' + username + '"';
 
     connection.query(sql, (error, result, fields) => {
         if (error) throw error;
@@ -89,7 +90,7 @@ app.post("/register", function (request, response) {
                     console.log("Email exist");
                 } else {
                     sql = 'INSERT INTO accounts (username, password, email) VALUES ?';
-                    var values = [[username, password, email]];
+                    let values = [[username, password, email]];
                     connection.query(sql, [values], (error, result) => {
                         if (error) throw error;
                         request.session.loggedin = true;
